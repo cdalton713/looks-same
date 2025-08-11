@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
@@ -12,7 +11,7 @@ describe('IgnoreCaretComparator', () => {
     let areColorsSame;
 
     const compareImages = (pixels, comparator) => {
-        const emptyPixels = _.map(pixels, (pixelRow) => Array(pixelRow.length).fill(0));
+        const emptyPixels = pixels.map(pixelRow => Array(pixelRow.length).fill(0));
         const width = pixels[0].length;
         const height = pixels.length;
 

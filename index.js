@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const colorDiff = require('color-diff');
 const img = require('./lib/image');
 const areColorsSame = require('./lib/same-colors');
@@ -152,7 +151,7 @@ const buildDiffImage = async (img1, img2, options) => {
 };
 
 const getToleranceFromOpts = (opts) => {
-    if (!_.hasIn(opts, 'tolerance')) {
+    if (!Object.hasOwn(opts, 'tolerance')) {
         return JND;
     }
 
@@ -167,11 +166,13 @@ const prepareOpts = (opts) => {
     opts = opts || {};
     opts.tolerance = getToleranceFromOpts(opts);
 
-    return _.defaults(opts, {
+    const defaults = {
         ignoreCaret: true,
         ignoreAntialiasing: true,
         antialiasingTolerance: 0
-    });
+    };
+
+    return Object.assign(defaults, opts);
 };
 
 const getMaxDiffBounds = (first, second) => {

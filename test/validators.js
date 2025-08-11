@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const {validateImages} = require('../lib/validators');
 
 describe('lib/validators', () => {
@@ -27,10 +26,13 @@ describe('lib/validators', () => {
 
             ['left', 'top', 'right', 'bottom'].forEach((field) => {
                 it(`required field "${field}" does not exist in "boundingBox"`, () => {
+                    const boundingBox = {left: 0, top: 0, right: 0, bottom: 0};
+                    delete boundingBox[field];
+
                     assert.throws(() => {
                         return validateImages(
-                            {source: 'image-path', boundingBox: _.omit({left: 0, top: 0, right: 0, bottom: 0}, field)},
-                            {source: 'image-path', boundingBox: _.omit({left: 0, top: 0, right: 0, bottom: 0}, field)}
+                            {source: 'image-path', boundingBox},
+                            {source: 'image-path', boundingBox}
                         );
                     }, TypeError, `Field "${field}" does not exist`);
                 });
