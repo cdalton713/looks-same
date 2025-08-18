@@ -11,8 +11,6 @@
     "@jsquash/png": "^3.1.1",
     "buffer-crc32": "^1.0.0",
     "color-diff": "^1.1.0",
-    "fs-extra": "^8.1.0",
-    "lodash": "^4.17.3",
     "nested-error-stacks": "^2.1.0",
     "parse-color": "^1.0.0"
   },
@@ -25,7 +23,6 @@
     "eslint": "^8.57.1",
     "eslint-config-gemini-testing": "^3.0.0",
     "globals": "^15.15.0",
-    "gm": "^1.23.1",
     "js-graph-algorithms": "^1.0.18",
     "mocha": "^5.2.0",
     "proxyquire": "^1.7.10",
