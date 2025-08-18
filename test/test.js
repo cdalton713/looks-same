@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const temp = require('temp');
+const sinon = require('sinon');
 const expect = require('chai').expect;
 
 const looksSame = require('..');

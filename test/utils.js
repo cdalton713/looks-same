@@ -1,5 +1,6 @@
 'use strict';
 
+const sinon = require('sinon');
 const {formatImages, areBuffersEqual, readPair, getDiffPixelsCoords} = require('../lib/utils');
 const areColorsSame = require('../lib/same-colors');
 const validators = require('../lib/validators');

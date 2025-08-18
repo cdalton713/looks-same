@@ -8,7 +8,7 @@ const AntialiasingComparator = require('./lib/antialiasing-comparator');
 const IgnoreCaretComparator = require('./lib/ignore-caret-comparator');
 const DiffArea = require('./lib/diff-area');
 const utils = require('./lib/utils');
-const {JND} = require('./lib/constants');
+const {JND, PNG: {RGBA_CHANNELS}} = require('./lib/constants');
 
 const makeAntialiasingComparator = (comparator, img1, img2, opts) => {
     const antialiasingComparator = new AntialiasingComparator(comparator, img1, img2, opts);
@@ -24,13 +24,42 @@ function makeCIEDE2000Comparator(tolerance) {
     const upperBound = tolerance * 6.2; // cie76 <= 6.2 * ciede2000
     const lowerBound = tolerance * 0.695; // cie76 >= 0.695 * ciede2000
 
+    let rgbColor1 = {};
+    let rgbColor2 = {};
+    let labColor1 = {};
+    let labColor2 = {};
+
     return function doColorsLookSame(data) {
         if (areColorsSame(data)) {
             return true;
         }
+
+        let lab1, lab2;
+
         /*jshint camelcase:false*/
-        const lab1 = colorDiff.rgb_to_lab(data.color1);
-        const lab2 = colorDiff.rgb_to_lab(data.color2);
+        if (areColorsSame({color1: data.color1, color2: rgbColor1})) {
+            lab1 = labColor1;
+        } else if (areColorsSame({color1: data.color1, color2: rgbColor2})) {
+            lab1 = labColor2;
+        }
+
+        if (areColorsSame({color1: data.color2, color2: rgbColor1})) {
+            lab2 = labColor1;
+        } else if (areColorsSame({color1: data.color2, color2: rgbColor2})) {
+            lab2 = labColor2;
+        }
+
+        if (!lab1) {
+            lab1 = colorDiff.rgb_to_lab(data.color1);
+            rgbColor1 = data.color1;
+            labColor1 = lab1;
+        }
+
+        if (!lab2) {
+            lab2 = colorDiff.rgb_to_lab(data.color2);
+            rgbColor2 = data.color2;
+            labColor2 = lab2;
+        }
 
         const cie76 = Math.sqrt(
             (lab1.L - lab2.L) * (lab1.L - lab2.L) +
@@ -93,13 +122,14 @@ const buildDiffImage = async (img1, img2, options) => {
     const minHeight = Math.min(img1.height, img2.height);
 
     const highlightColor = options.highlightColor;
-    const resultBuffer = Buffer.alloc(width * height * 3);
+    const resultBuffer = Buffer.allocUnsafe(width * height * RGBA_CHANNELS);
 
     const setPixel = (buf, x, y, {R, G, B}) => {
-        const pixelInd = (y * width + x) * 3;
+        const pixelInd = (y * width + x) * RGBA_CHANNELS;
         buf[pixelInd] = R;
         buf[pixelInd + 1] = G;
         buf[pixelInd + 2] = B;
+        buf[pixelInd + 3] = 0xff;
     };
 
     await iterateRect(width, height, (x, y) => {
@@ -118,7 +148,7 @@ const buildDiffImage = async (img1, img2, options) => {
         }
     });
 
-    return img.fromBuffer(resultBuffer, {raw: {width, height, channels: 3}});
+    return img.fromBuffer(resultBuffer, {rgb: {width, height}});
 };
 
 const getToleranceFromOpts = (opts) => {

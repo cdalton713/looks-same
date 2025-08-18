@@ -61,7 +61,7 @@ See [**results.md**](./results.md) for execution times across all test cases.
    ```
 3. Install dependencies:
    ```bash
-   npm ci
+   npm install
    ```
 4. Run the benchmark:
    ```bash

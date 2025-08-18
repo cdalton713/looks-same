@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gemini-testing/looks-same.svg?branch=master)](https://travis-ci.org/gemini-testing/looks-same)
 
-Node.js library for comparing images, taking into account human color
+Pure node.js library for comparing png images, taking into account human color
 perception. It is created specially for the needs of visual regression testing
 for [`testplane`](http://github.com/gemini-testing/testplane) utility, but can be used
 for other purposes.
@@ -13,12 +13,6 @@ Benchmark is presented in the corresponding directory.
 
 - [Benchmark description](./benchmark/README.md)
 - [Benchmark results](./benchmark/results.md)
-
-## Supported image formats
-
-JPEG, PNG, WebP, GIF, AVIF, TIFF and SVG images are supported.
-
-*Note: If you want to compare jpeg files, you may encounter random differences due to the jpeg structure if they are not lossless jpeg files.*
 
 ## Comparing images
 

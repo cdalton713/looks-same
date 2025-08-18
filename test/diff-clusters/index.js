@@ -1,5 +1,6 @@
 'use strict';
 
+const sinon = require('sinon');
 const DiffArea = require('../../lib/diff-area');
 const DiffClusters = require('../../lib/diff-clusters');
 const clustersJoiner = require('../../lib/diff-clusters/clusters-joiner');

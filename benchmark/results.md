@@ -8,55 +8,55 @@ All values represent raw performance metrics (average, p50, p99).
 ## Case: web avg diff (672x623)
 | Package      | Avg (ms) | p50 (ms) | p99 (ms) |
 |--------------|----------|----------|----------|
-| looks-same   | 43.5     | 42       | 53.66    |
-| pixelmatch   | 49.48    | 48.56    | 53.31    |
-| resemblejs   | 47.01    | 46.63    | 51.89    |
-| blink-diff   | 59.8     | 60.44    | 68.73    |
+| looks-same   | 39.77    | 37.08    | 54.56    |
+| pixelmatch   | 52.35    | 52       | 57.24    |
+| resemblejs   | 36.13    | 35.29    | 47.35    |
+| blink-diff   | 60.9     | 61.08    | 62.84    |
 
 ## Case: web avg success (656x547)
 | Package      | Avg (ms) | p50 (ms) | p99 (ms) |
 |--------------|----------|----------|----------|
-| looks-same   | 12.74    | 12.44    | 17.99    |
-| pixelmatch   | 37.51    | 36.98    | 41.37    |
-| resemblejs   | 28.74    | 28.27    | 33.31    |
-| blink-diff   | 35.19    | 33.25    | 43.28    |
+| looks-same   | 18.37    | 17.65    | 24.26    |
+| pixelmatch   | 39.8     | 39.52    | 43.41    |
+| resemblejs   | 22.93    | 22.25    | 31.64    |
+| blink-diff   | 37.37    | 38.95    | 42.37    |
 
 ## Case: equal images (1000x1000)
 | Package      | Avg (ms) | p50 (ms) | p99 (ms) |
 |--------------|----------|----------|----------|
-| looks-same   | 0.04     | 0.04     | 0.05     |
-| pixelmatch   | 45.39    | 44.95    | 49.18    |
-| resemblejs   | 69.44    | 69.04    | 74.8     |
-| blink-diff   | 88.65    | 88.14    | 98.4     |
+| looks-same   | 0.04     | 0.03     | 0.07     |
+| pixelmatch   | 31.03    | 30.93    | 32.64    |
+| resemblejs   | 55.31    | 55.1     | 58.73    |
+| blink-diff   | 90.6     | 89.36    | 98.84    |
 
 ## Case: 1% visible diff (1000x1000)
 | Package      | Avg (ms) | p50 (ms) | p99 (ms) |
 |--------------|----------|----------|----------|
-| looks-same   | 28.73    | 27.89    | 36.44    |
-| pixelmatch   | 102.03   | 102.16   | 106.81   |
-| resemblejs   | 72.63    | 72.17    | 82.85    |
-| blink-diff   | 94.93    | 94.46    | 107.78   |
+| looks-same   | 45.09    | 43.44    | 54.91    |
+| pixelmatch   | 107.8    | 108.1    | 110.28   |
+| resemblejs   | 57.09    | 56.6     | 66.89    |
+| blink-diff   | 95.52    | 94.52    | 106.12   |
 
 ## Case: 10% visible diff (1000x1000)
 | Package      | Avg (ms) | p50 (ms) | p99 (ms) |
 |--------------|----------|----------|----------|
-| looks-same   | 33.66    | 33.68    | 37.44    |
-| pixelmatch   | 101.23   | 101.02   | 105.67   |
-| resemblejs   | 72.09    | 71.77    | 80.57    |
-| blink-diff   | 94.52    | 94.13    | 105.07   |
+| looks-same   | 48.61    | 48.52    | 50.66    |
+| pixelmatch   | 108.62   | 108.46   | 112.82   |
+| resemblejs   | 56.2     | 56.13    | 60.98    |
+| blink-diff   | 95.65    | 94.45    | 104.43   |
 
 ## Case: full max diff (1000x1000)
 | Package      | Avg (ms) | p50 (ms) | p99 (ms) |
 |--------------|----------|----------|----------|
-| looks-same   | 467.33   | 463.05   | 491.6    |
-| pixelmatch   | 148.59   | 148.39   | 153.3    |
-| resemblejs   | 605.37   | 600.99   | 668.96   |
-| blink-diff   | 685.83   | 683.26   | 741.43   |
+| looks-same   | 138.09   | 130.43   | 154.69   |
+| pixelmatch   | 158.36   | 157.83   | 165.5    |
+| resemblejs   | 446.21   | 445.17   | 459.8    |
+| blink-diff   | 672.47   | 667.98   | 749.87   |
 
 ## Case: demonstrative example visible 8% diff (896×784)
 | Package      | Avg (ms) | p50 (ms) | p99 (ms) |
 |--------------|----------|----------|----------|
-| looks-same   | 55.1     | 55.7     | 61.5     |
-| pixelmatch   | 87.05    | 86.96    | 89.62    |
-| resemblejs   | 80.05    | 79.72    | 87.71    |
-| blink-diff   | 111.29   | 109.2    | 126.47   |
+| looks-same   | 36.96    | 36.97    | 38.59    |
+| pixelmatch   | 98.18    | 98.04    | 101.33   |
+| resemblejs   | 61.67    | 61.36    | 68.36    |
+| blink-diff   | 118.86   | 117.07   | 132.47   |
