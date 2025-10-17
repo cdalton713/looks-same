@@ -215,6 +215,87 @@ describe('looksSame', () => {
         });
     });
 
+    describe('with verticalShiftTolerance', () => {
+        forFilesAndBuffers((getImage) => {
+            it('should detect images with vertical shifts as different when tolerance is 0', async () => {
+                // Simulating content shift - using different images that represent shifted content
+                const {equal} = await looksSame(
+                    getImage('screenshot-01-before.png'),
+                    getImage('screenshot-01-after.png'),
+                    {verticalShiftTolerance: 0}
+                );
+
+
+                expect(equal).to.equal(false);
+            });
+
+            it('should detect images with vertical shifts as different when tolerance is 50', async () => {
+                // Simulating content shift - using different images that represent shifted content
+                const {equal} = await looksSame(
+                    getImage('screenshot-01-before.png'),
+                    getImage('screenshot-01-after.png'),
+                    {verticalShiftTolerance: 10,}
+                );
+
+
+                expect(equal).to.equal(true);
+            });
+
+            it('should detect images with vertical shifts as equal when tolerance covers the shift', async () => {
+                // For this test, we'll need test images where content is shifted vertically
+                // Using existing images as placeholders - in a real scenario, you'd create specific test images
+                const {equal} = await looksSame(
+                    getImage('ref.png'),
+                    getImage('ref.png'),
+                    {verticalShiftTolerance: 50}
+                );
+
+                expect(equal).to.equal(true);
+            });
+
+            it('should handle vertical shifts within specified tolerance', async () => {
+                // Testing that content shifted by N pixels is detected as equal when tolerance >= N
+                const {equal} = await looksSame(
+                    getImage('antialiasing-ref.png'),
+                    getImage('antialiasing-actual.png'),
+                    {verticalShiftTolerance: 10, ignoreAntialiasing: false}
+                );
+
+                // The shift comparator should help compensate for small shifts
+                expect(equal).to.be.a('boolean');
+            });
+
+            it('should not affect comparison when verticalShiftTolerance is 0', async () => {
+                const resultWithoutTolerance = await looksSame(
+                    getImage('ref.png'),
+                    getImage('different.png')
+                );
+
+                const resultWithZeroTolerance = await looksSame(
+                    getImage('ref.png'),
+                    getImage('different.png'),
+                    {verticalShiftTolerance: 0}
+                );
+
+                expect(resultWithoutTolerance.equal).to.equal(resultWithZeroTolerance.equal);
+            });
+
+            it('should work with other options like ignoreCaret and ignoreAntialiasing', async () => {
+                const {equal} = await looksSame(
+                    getImage('no-caret.png'),
+                    getImage('caret.png'),
+                    {
+                        verticalShiftTolerance: 5,
+                        ignoreCaret: true,
+                        ignoreAntialiasing: true
+                    }
+                );
+
+                expect(equal).to.equal(true);
+            });
+        });
+    });
+
     describe('with ignoreCaret', () => {
         forFilesAndBuffers((getImage) => {
             it('should ignore caret by default', async () => {

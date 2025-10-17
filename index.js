@@ -5,6 +5,7 @@ const img = require('./lib/image');
 const areColorsSame = require('./lib/same-colors');
 const AntialiasingComparator = require('./lib/antialiasing-comparator');
 const IgnoreCaretComparator = require('./lib/ignore-caret-comparator');
+const VerticalShiftComparator = require('./lib/vertical-shift-comparator');
 const DiffArea = require('./lib/diff-area');
 const utils = require('./lib/utils');
 const {JND, PNG: {RGBA_CHANNELS}} = require('./lib/constants');
@@ -17,6 +18,11 @@ const makeAntialiasingComparator = (comparator, img1, img2, opts) => {
 const makeNoCaretColorComparator = (comparator, pixelRatio) => {
     const caretComparator = new IgnoreCaretComparator(comparator, pixelRatio);
     return (data) => caretComparator.compare(data);
+};
+
+const makeVerticalShiftComparator = (comparator, img1, img2, opts) => {
+    const verticalShiftComparator = new VerticalShiftComparator(comparator, img1, img2, opts);
+    return (data) => verticalShiftComparator.compare(data);
 };
 
 function makeCIEDE2000Comparator(tolerance) {
@@ -80,6 +86,11 @@ function makeCIEDE2000Comparator(tolerance) {
 
 const createComparator = (img1, img2, opts) => {
     let comparator = opts.strict ? areColorsSame : makeCIEDE2000Comparator(opts.tolerance);
+
+    // Apply vertical shift compensation if enabled
+    if (opts.verticalShiftTolerance && opts.verticalShiftTolerance > 0) {
+        comparator = makeVerticalShiftComparator(comparator, img1, img2, opts);
+    }
 
     if (opts.ignoreAntialiasing) {
         comparator = makeAntialiasingComparator(comparator, img1, img2, opts);
@@ -169,7 +180,8 @@ const prepareOpts = (opts) => {
     const defaults = {
         ignoreCaret: true,
         ignoreAntialiasing: true,
-        antialiasingTolerance: 0
+        antialiasingTolerance: 0,
+        verticalShiftTolerance: 0
     };
 
     return Object.assign(defaults, opts);

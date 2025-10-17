@@ -79,6 +79,36 @@ Example:
 const {equal} = await looksSame('image1.png', 'image2.png', {ignoreAntialiasing: true, antialiasingTolerance: 3});
 ```
 
+### Handling vertical content shifts
+
+Web pages often have dynamic content that can cause elements to shift vertically. For example, when a banner is added at the top of a page, all content below it shifts down. The `verticalShiftTolerance` option allows you to handle these vertical shifts by automatically detecting and compensating for them during comparison.
+
+```javascript
+// Compensate for vertical shifts up to 50 pixels
+const {equal} = await looksSame('image1.png', 'image2.png', {verticalShiftTolerance: 50});
+```
+
+When `verticalShiftTolerance` is set to a value greater than 0, the library will:
+1. Detect if content has shifted vertically between the two images
+2. Find the optimal vertical alignment within the specified tolerance range
+3. Compare the images with the shift compensation applied
+
+This is particularly useful for:
+- Responsive layouts where elements may shift based on viewport changes
+- Dynamic content insertion (banners, notifications, etc.)
+- A/B testing where layout changes affect vertical positioning
+- Cross-browser testing where rendering differences cause minor shifts
+
+Note: This option only handles **vertical** shifts. Horizontal shifts are not compensated. The default value is 0 (no shift compensation).
+
+```javascript
+// Example: Comparing screenshots where a 30px notification bar was added
+const {equal} = await looksSame('before.png', 'after-with-notification.png', {
+    verticalShiftTolerance: 35, // Allow up to 35px vertical shift
+    tolerance: 2.3               // Still use color tolerance for actual differences
+});
+```
+
 ### Getting diff bounds
 Looksame returns information about diff bounds. It returns only first pixel if you passed `stopOnFirstFail` option with `true` value. The whole diff area would be returned if `stopOnFirstFail` option is not passed or it's passed with `false` value.
 
@@ -109,7 +139,8 @@ await looksSame.createDiff({
     tolerance: 2.5,
     antialiasingTolerance: 0,
     ignoreAntialiasing: true, // ignore antialising by default
-    ignoreCaret: true // ignore caret by default
+    ignoreCaret: true, // ignore caret by default
+    verticalShiftTolerance: 0 // vertical shift compensation in pixels
 });
 ```
 
